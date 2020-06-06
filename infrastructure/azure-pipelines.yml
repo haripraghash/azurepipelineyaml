@@ -19,16 +19,16 @@ steps:
   inputs:
     targetType: 'inline'
     script: ls
-- script: dotnet build $(projectName) --configuration $(buildConfiguration)
+- script: dotnet build /app/simplewebapi/$(projectName) --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
 - task: ArchiveFiles@2
   displayName: 'Archive binaries'
   inputs:
-    rootFolderOrFile: \aspnetcore-webapi\app\simplewebapi\bin\Debug\netcoreapp3.1
+    rootFolderOrFile: /aspnetcore-webapi/app/simplewebapi/bin/Debug/netcoreapp3.1
     archiveType: 'zip'
     includeRootFolder: false
-    archiveFile: $(Build.ArtifactStagingDirectory)\app.zip
+    archiveFile: $(Build.ArtifactStagingDirectory)/app.zip
     replaceExistingArchive: true
 
 # - task: CopyFiles@2
