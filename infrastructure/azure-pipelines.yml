@@ -11,9 +11,15 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  projectName: 'simplewebapi.csproj'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
+- task: Bash@3
+  displayName: 'List contents'
+  inputs:
+    targetType: 'inline'
+    script: ll -a
+- script: dotnet build $(projectName) --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
 - task: ArchiveFiles@2
