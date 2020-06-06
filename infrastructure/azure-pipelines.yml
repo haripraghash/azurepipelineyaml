@@ -14,11 +14,6 @@ variables:
   projectName: 'simplewebapi.csproj'
 
 steps:
-- task: Bash@3
-  displayName: 'List contents'
-  inputs:
-    targetType: 'inline'
-    script: ll -a
 - script: dotnet build $(projectName) --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
