@@ -12,6 +12,9 @@ pool:
 variables:
   buildConfiguration: 'Release'
   projectName: 'simplewebapi.csproj'
+  projectPath: 'app/simplewebapi'
+  archiveFileName: 'app'
+  rootFolder: 'app/simplewebapi/bin'
 
 resources:
   repositories:
@@ -32,9 +35,9 @@ steps:
   parameters:
     buildConfiguration: $(buildConfiguration)
     projectName: $(projectName)
-    projectPath: 'app/simplewebapi'
-    archiveFileName: 'app'
-    rootFolder: 'app/simplewebapi/bin'
+    projectPath: $(projectPath)
+    archiveFileName: $(archiveFileName)
+    rootFolder: $(rootFolder)
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifact'
