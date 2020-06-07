@@ -13,30 +13,28 @@ variables:
   buildConfiguration: 'Release'
   projectName: 'simplewebapi.csproj'
 
+resources:
+  repositories:
+  - repository: azuredevopspipelinetemplates
+    type: github
+    name: haripraghash/azuredevopspipelinetemplates
+    endpoint: github.com_haripraghash
+    ref: refs/heads/master
+
 steps:
 - task: Bash@3
   displayName: 'List contents'
   inputs:
     targetType: 'inline'
     script: ls
-- script: dotnet build app/simplewebapi/$(projectName) --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
 
-- task: ArchiveFiles@2
-  displayName: 'Archive binaries'
-  inputs:
-    rootFolderOrFile: app/simplewebapi/bin/$(buildConfiguration)/netcoreapp3.1
-    archiveType: 'zip'
-    includeRootFolder: false
-    archiveFile: $(Build.ArtifactStagingDirectory)/app.zip
-    replaceExistingArchive: true
-
-# - task: CopyFiles@2
-#   displayName: 'Copy infrastructure files to staging directory'
-#   inputs:
-#     Contents: '**\Infrastructure\*'
-#     TargetFolder: '$(Build.ArtifactStagingDirectory)/Infrastructure'
-#     flattenFolders: true
+- template: azuredevops/pipelinetemplates/shared-template.yaml@azuredevopspipelinetemplates
+  parameters:
+    buildConfiguration: $(buildConfiguration)
+    projectName: $(projectName)
+    projectPath: 'app/simplewebapi'
+    archiveFileName: 'app'
+    rootFolder: 'app/simplewebapi/bin'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifact'
